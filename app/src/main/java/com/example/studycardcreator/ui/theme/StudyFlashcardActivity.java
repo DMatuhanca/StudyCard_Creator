@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,10 +23,10 @@ public class StudyFlashcardActivity extends AppCompatActivity {
     private Iterator<Flashcard> flashcardIterator;
     private Flashcard currentFlashcard;
     private Button exitButton;
-    private Button checkButton;
-    private TextView subjectTextView;
+    private Button showAnswerButton;
+    private Button nextButton;
     private TextView questionTextView;
-    private EditText answerEditText;
+    private TextView answerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +44,10 @@ public class StudyFlashcardActivity extends AppCompatActivity {
         flashcardIterator = flashcards.iterator();
 
         exitButton = findViewById(R.id.button_exit);
-        checkButton = findViewById(R.id.button_check);
-        subjectTextView = findViewById(R.id.textview_subject);
-        questionTextView = findViewById(R.id.textview_question);
-        answerEditText = findViewById(R.id.edittext_answer);
+        showAnswerButton = findViewById(R.id.button_show_answer);
+        nextButton = findViewById(R.id.button_next);
+        questionTextView = findViewById(R.id.textView_question);
+        answerTextView = findViewById(R.id.textView_answer);
 
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,17 +56,16 @@ public class StudyFlashcardActivity extends AppCompatActivity {
             }
         });
 
-        checkButton.setOnClickListener(new View.OnClickListener() {
+        showAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userAnswer = answerEditText.getText().toString();
-                String correctAnswer = currentFlashcard.getAnswer();
-                if (userAnswer.equals(correctAnswer)) {
-                    Toast.makeText(StudyFlashcardActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(StudyFlashcardActivity.this, "Incorrect! The correct answer is: " + correctAnswer, Toast.LENGTH_SHORT).show();
-                }
-                answerEditText.setText("");
+                answerTextView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 showNextFlashcard();
             }
         });
@@ -78,8 +76,9 @@ public class StudyFlashcardActivity extends AppCompatActivity {
     private void showNextFlashcard() {
         if (flashcardIterator.hasNext()) {
             currentFlashcard = flashcardIterator.next();
-            subjectTextView.setText(currentFlashcard.getSubject());
             questionTextView.setText(currentFlashcard.getQuestion());
+            answerTextView.setText(currentFlashcard.getAnswer());
+            answerTextView.setVisibility(View.GONE);  // Initially hide the answer
         } else {
             Toast.makeText(this, "No more flashcards!", Toast.LENGTH_SHORT).show();
             finish();
