@@ -1,23 +1,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
     <LinearLayout
         android:id="@+id/flashcard_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/primaryColor"
+        android:background="@drawable/button_background"
         android:padding="16dp"
-        android:layout_centerInParent="true">
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_margin="16dp">
 
         <TextView
             android:id="@+id/textView_subject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:textColor="#FFF"
             android:text="Subject" />
 
@@ -25,8 +28,9 @@
             android:id="@+id/textView_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textSize="24sp"
+            android:textStyle="bold"
             android:textColor="#FFF"
             android:text="Question" />
 
@@ -34,47 +38,50 @@
             android:id="@+id/textView_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:textSize="20sp"
+            android:textStyle="bold"
             android:textColor="#FFF"
             android:text="Answer"
             android:visibility="gone" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button_show_answer"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/show_answer"
-        android:textColor="#FFF"
-        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/primaryColor" />
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/button_next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next_flashcard"
-        android:textColor="#FFF"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/primaryColor" />
+        <Button
+            android:id="@+id/button_show_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/show_answer"
+            android:textColor="#FFF"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="8dp" />
 
-    <Button
-        android:id="@+id/button_exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/exit"
-        android:textColor="#FFF"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/primaryColor" />
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/next_flashcard"
+            android:textColor="#FFF"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/button_exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/exit"
+            android:textColor="#FFF"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

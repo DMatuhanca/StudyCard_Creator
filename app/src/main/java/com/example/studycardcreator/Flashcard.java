@@ -1,5 +1,7 @@
 package com.example.studycardcreator;
 
+import java.util.Objects;
+
 public class Flashcard {
     private String subject;
     private String question;
@@ -36,5 +38,21 @@ public class Flashcard {
     @Override
     public String toString() {
         return "Subject: " + subject + "\nQuestion: " + question + "\nAnswer: " + answer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Flashcard flashcard = (Flashcard) o;
+        return Objects.equals(subject, flashcard.subject) &&
+                Objects.equals(question, flashcard.question) &&
+                Objects.equals(answer, flashcard.answer);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(subject, question, answer, selected);
     }
 }

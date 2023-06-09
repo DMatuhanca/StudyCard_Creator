@@ -28,6 +28,8 @@ public class ViewFlashcardActivity extends AppCompatActivity {
     private Button deleteSelectedButton;
     private Button deleteAllButton;
 
+    private Button exitButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,9 @@ public class ViewFlashcardActivity extends AppCompatActivity {
 
         deleteSelectedButton.setOnClickListener(v -> deleteSelectedFlashcards());
         deleteAllButton.setOnClickListener(v -> showDeleteAllConfirmationDialog());
+
+        exitButton = findViewById(R.id.exit_button);
+        exitButton.setOnClickListener(v -> finish());
     }
 
     private void retrieveFlashcards() {
@@ -55,23 +60,28 @@ public class ViewFlashcardActivity extends AppCompatActivity {
     }
 
     private void setupListView() {
-        arrayAdapter = new ArrayAdapter<Flashcard>(this, R.layout.item_flashcard, flashcards) {
+        arrayAdapter = new ArrayAdapter<Flashcard>(this, R.layout.flashcard_view_item, flashcards) {
 
             @Override
             public View getView(final int position, View convertView, ViewGroup parent) {
                 if (convertView == null) {
-                    convertView = getLayoutInflater().inflate(R.layout.item_flashcard, parent, false);
+                    convertView = getLayoutInflater().inflate(R.layout.flashcard_view_item, parent, false);
                 }
 
                 TextView textViewSubject = convertView.findViewById(R.id.text_view_subject);
                 TextView textViewQuestion = convertView.findViewById(R.id.text_view_question);
+                TextView textViewAnswer = convertView.findViewById(R.id.textView_answer);
                 CheckBox checkBox = convertView.findViewById(R.id.checkbox);
 
                 final Flashcard flashcard = flashcards.get(position);
                 textViewSubject.setText(flashcard.getSubject());
                 textViewQuestion.setText(flashcard.getQuestion());
+                textViewAnswer.setText(flashcard.getAnswer());
 
-                checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> flashcard.setSelected(isChecked));
+                checkBox.setChecked(flashcard.isSelected());
+                checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    flashcard.setSelected(isChecked);
+                });
 
                 return convertView;
             }
@@ -79,6 +89,7 @@ public class ViewFlashcardActivity extends AppCompatActivity {
 
         flashcardListView.setAdapter(arrayAdapter);
     }
+
 
     private void deleteSelectedFlashcards() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

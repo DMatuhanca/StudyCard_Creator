@@ -27,11 +27,14 @@ public class StudyFlashcardActivity extends AppCompatActivity {
     private Button nextButton;
     private TextView questionTextView;
     private TextView answerTextView;
+    private TextView subjectTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_flashcard);
+
+        subjectTextView = findViewById(R.id.textView_subject);
 
         SharedPreferences sharedPreferences = getSharedPreferences("flashcards", MODE_PRIVATE);
         Map<String, ?> allEntries = sharedPreferences.getAll();
@@ -76,9 +79,10 @@ public class StudyFlashcardActivity extends AppCompatActivity {
     private void showNextFlashcard() {
         if (flashcardIterator.hasNext()) {
             currentFlashcard = flashcardIterator.next();
+            subjectTextView.setText(currentFlashcard.getSubject());
             questionTextView.setText(currentFlashcard.getQuestion());
             answerTextView.setText(currentFlashcard.getAnswer());
-            answerTextView.setVisibility(View.GONE);  // Initially hide the answer
+            answerTextView.setVisibility(View.GONE);
         } else {
             Toast.makeText(this, "No more flashcards!", Toast.LENGTH_SHORT).show();
             finish();

@@ -1,6 +1,6 @@
 package com.example.studycardcreator.ui.theme;
-
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -42,23 +42,43 @@ public class CreateFlashcardActivity extends AppCompatActivity {
                     String question = questionEditText.getText().toString();
                     String answer = answerEditText.getText().toString();
 
+                    if (subject.isEmpty() || question.isEmpty() || answer.isEmpty()) {
+                        Toast.makeText(CreateFlashcardActivity.this, "Incomplete flashcard! Please fill in all fields.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
                     Flashcard flashcard = new Flashcard(subject, question, answer);
                     saveFlashcard(flashcard);
 
-                    String message = "Flashcard created:\n" + flashcard;
+                    String message = "Flashcard created:\nSubject: " + subject + ", Question: " + question + ", Answer: " + answer;
                     Toast.makeText(CreateFlashcardActivity.this, message, Toast.LENGTH_LONG).show();
                     finish();
                 })
-                .setNegativeButton("Cancel", null);
+
+                .setNegativeButton("Exit", (dialog, id) -> {
+                    Intent intent = new Intent(CreateFlashcardActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                });
 
         builder.create().show();
+
+
     }
 
     private void saveFlashcard(Flashcard flashcard) {
+        if (flashcard.getSubject().isEmpty() || flashcard.getQuestion().isEmpty() || flashcard.getAnswer().isEmpty()) {
+            Toast.makeText(this, "Incomplete flashcard! Please fill in all fields.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String flashcardJson = gson.toJson(flashcard);
         editor.putString(flashcard.getSubject(), flashcardJson);
         editor.apply();
     }
+
+
+
 }
