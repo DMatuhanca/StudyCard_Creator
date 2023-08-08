@@ -75,9 +75,11 @@ public class CreateFlashcardActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String flashcardJson = gson.toJson(flashcard);
-        editor.putString(flashcard.getSubject(), flashcardJson);
+        editor.putString(flashcard.getId(), flashcardJson);
         editor.apply();
     }
+
+
 
 
 

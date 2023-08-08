@@ -5,7 +5,8 @@ import android.os.Bundle;
 import com.example.studycardcreator.R;
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
+import com.google.android.material.card.MaterialCardView; // Import MaterialCardView
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,11 +14,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button createButton = findViewById(R.id.button_create_flashcard);
-        Button viewButton = findViewById(R.id.button_view_flashcards);
-        Button studyButton = findViewById(R.id.button_study_flashcards);
+        MaterialCardView createCard = findViewById(R.id.card_create_flashcard);
+        MaterialCardView viewCard = findViewById(R.id.card_view_flashcards);
+        MaterialCardView studyCard = findViewById(R.id.card_study_flashcards);
 
-        createButton.setOnClickListener(new View.OnClickListener() {
+        createCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, CreateFlashcardActivity.class);
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewButton.setOnClickListener(new View.OnClickListener() {
+        viewCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ViewFlashcardActivity.class);
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        studyButton.setOnClickListener(new View.OnClickListener() {
+        studyCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, StudyFlashcardActivity.class);
@@ -42,4 +43,3 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
-

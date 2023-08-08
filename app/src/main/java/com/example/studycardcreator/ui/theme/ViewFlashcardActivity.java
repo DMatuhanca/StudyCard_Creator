@@ -2,28 +2,30 @@ package com.example.studycardcreator.ui.theme;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.EditText;
 import android.widget.Toast;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.studycardcreator.Flashcard;
+import com.example.studycardcreator.FlashcardAdapter;
 import com.example.studycardcreator.R;
 import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class ViewFlashcardActivity extends AppCompatActivity {
     private final List<Flashcard> flashcards = new ArrayList<>();
-    private ListView flashcardListView;
-    private ArrayAdapter<Flashcard> arrayAdapter;
+    private RecyclerView recyclerView;
+
+    private FlashcardAdapter adapter;
     private SharedPreferences sharedPreferences;
     private Button deleteSelectedButton;
     private Button deleteAllButton;
@@ -35,13 +37,13 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_flashcards);
 
-        flashcardListView = findViewById(R.id.flashcard_list_view);
+        recyclerView = findViewById(R.id.flashcard_list_view);
         deleteSelectedButton = findViewById(R.id.delete_selected_button);
         deleteAllButton = findViewById(R.id.delete_all_button);
         sharedPreferences = getSharedPreferences("flashcards", MODE_PRIVATE);
 
+        setupRecyclerView();
         retrieveFlashcards();
-        setupListView();
 
         deleteSelectedButton.setOnClickListener(v -> deleteSelectedFlashcards());
         deleteAllButton.setOnClickListener(v -> showDeleteAllConfirmationDialog());
@@ -50,46 +52,26 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         exitButton.setOnClickListener(v -> finish());
     }
 
+
+    private void setupRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new FlashcardAdapter(flashcards, this);
+
+        recyclerView.setAdapter(adapter);
+    }
+
     private void retrieveFlashcards() {
-        Map<String, ?> allEntries = sharedPreferences.getAll();
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            Gson gson = new Gson();
-            Flashcard flashcard = gson.fromJson(entry.getValue().toString(), Flashcard.class);
-            flashcards.add(flashcard);
-        }
-    }
-
-    private void setupListView() {
-        arrayAdapter = new ArrayAdapter<Flashcard>(this, R.layout.flashcard_view_item, flashcards) {
-
-            @Override
-            public View getView(final int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = getLayoutInflater().inflate(R.layout.flashcard_view_item, parent, false);
-                }
-
-                TextView textViewSubject = convertView.findViewById(R.id.text_view_subject);
-                TextView textViewQuestion = convertView.findViewById(R.id.text_view_question);
-                TextView textViewAnswer = convertView.findViewById(R.id.textView_answer);
-                CheckBox checkBox = convertView.findViewById(R.id.checkbox);
-
-                final Flashcard flashcard = flashcards.get(position);
-                textViewSubject.setText(flashcard.getSubject());
-                textViewQuestion.setText(flashcard.getQuestion());
-                textViewAnswer.setText(flashcard.getAnswer());
-
-                checkBox.setChecked(flashcard.isSelected());
-                checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    flashcard.setSelected(isChecked);
-                });
-
-                return convertView;
+        new Thread(() -> {
+            Map<String, ?> allEntries = sharedPreferences.getAll();
+            for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+                Gson gson = new Gson();
+                Flashcard flashcard = gson.fromJson(entry.getValue().toString(), Flashcard.class);
+                flashcards.add(flashcard);
             }
-        };
 
-        flashcardListView.setAdapter(arrayAdapter);
+            runOnUiThread(() -> adapter.notifyDataSetChanged());
+        }).start();
     }
-
 
     private void deleteSelectedFlashcards() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -109,14 +91,12 @@ public class ViewFlashcardActivity extends AppCompatActivity {
                     flashcards.removeAll(selectedFlashcards);
 
                     editor.apply();
-                    arrayAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                     Toast.makeText(ViewFlashcardActivity.this, "Selected flashcards deleted", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
     }
-
-
 
     private void showDeleteAllConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -125,7 +105,7 @@ public class ViewFlashcardActivity extends AppCompatActivity {
                 .setPositiveButton("Delete All", (dialog, which) -> {
                     deleteAllFlashcards();
                     flashcards.clear();
-                    arrayAdapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                     Toast.makeText(ViewFlashcardActivity.this, "All flashcards deleted", Toast.LENGTH_SHORT).show();
                 })
                 .setNegativeButton("Cancel", null)
@@ -136,5 +116,45 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
+    }
+    public void editFlashcard(Flashcard flashcard) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_edit_flashcard, null);
+        final EditText inputSubject = viewInflated.findViewById(R.id.input_subject);
+        final EditText inputQuestion = viewInflated.findViewById(R.id.input_question);
+        final EditText inputAnswer = viewInflated.findViewById(R.id.input_answer);
+
+        inputSubject.setText(flashcard.getSubject());
+        inputQuestion.setText(flashcard.getQuestion());
+        inputAnswer.setText(flashcard.getAnswer());
+
+        builder.setView(viewInflated);
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            String oldSubject = flashcard.getSubject();
+
+            String newSubject = inputSubject.getText().toString();
+            String newQuestion = inputQuestion.getText().toString();
+            String newAnswer = inputAnswer.getText().toString();
+
+            flashcard.setSubject(newSubject);
+            flashcard.setQuestion(newQuestion);
+            flashcard.setAnswer(newAnswer);
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            if (!oldSubject.equals(newSubject)) {
+                editor.remove(oldSubject);
+            }
+
+            Gson gson = new Gson();
+            String flashcardJson = gson.toJson(flashcard);
+            editor.putString(flashcard.getSubject(), flashcardJson);
+            editor.apply();
+
+            adapter.notifyDataSetChanged();
+        });
+
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
+        builder.show();
     }
 }

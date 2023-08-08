@@ -1,9 +1,11 @@
 package com.example.studycardcreator.ui.theme;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,22 @@ public class StudyFlashcardActivity extends AppCompatActivity {
     private TextView questionTextView;
     private TextView answerTextView;
     private TextView subjectTextView;
+
+    private int getColorForSubject(String subject) {
+        final int baseColor = 0xFFAAAAAA;
+
+        int hash = subject.hashCode();
+        int red = (hash & 0xFF0000) >> 16;
+        int green = (hash & 0x00FF00) >> 8;
+        int blue = hash & 0x0000FF;
+
+        red = (red + Color.red(baseColor)) / 2;
+        green = (green + Color.green(baseColor)) / 2;
+        blue = (blue + Color.blue(baseColor)) / 2;
+
+        return Color.rgb(red, green, blue);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +98,10 @@ public class StudyFlashcardActivity extends AppCompatActivity {
         if (flashcardIterator.hasNext()) {
             currentFlashcard = flashcardIterator.next();
             subjectTextView.setText(currentFlashcard.getSubject());
+
+            int color = getColorForSubject(currentFlashcard.getSubject());
+            ((LinearLayout) findViewById(R.id.flashcard_layout)).setBackgroundColor(color);
+
             questionTextView.setText(currentFlashcard.getQuestion());
             answerTextView.setText(currentFlashcard.getAnswer());
             answerTextView.setVisibility(View.GONE);
@@ -88,4 +110,5 @@ public class StudyFlashcardActivity extends AppCompatActivity {
             finish();
         }
     }
+
 }

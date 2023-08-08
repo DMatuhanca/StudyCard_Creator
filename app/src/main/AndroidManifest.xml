@@ -12,7 +12,7 @@
 
         <activity
             android:name=".ui.theme.MainActivity"
-            android:theme="@style/AppTheme"
+            android:theme="@style/Theme.StudyCardCreator"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

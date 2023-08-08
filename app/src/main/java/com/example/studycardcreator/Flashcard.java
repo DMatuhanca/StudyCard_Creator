@@ -1,8 +1,11 @@
 package com.example.studycardcreator;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Flashcard {
+
+    private String id;
     private String subject;
     private String question;
     private String answer;
@@ -13,6 +16,11 @@ public class Flashcard {
         this.question = question;
         this.answer = answer;
         this.selected = false;
+        this.id = UUID.randomUUID().toString();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public boolean isSelected() {
@@ -34,6 +42,19 @@ public class Flashcard {
     public String getAnswer() {
         return answer;
     }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
 
     @Override
     public String toString() {

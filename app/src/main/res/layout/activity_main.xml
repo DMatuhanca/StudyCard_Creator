@@ -1,4 +1,5 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,47 +13,83 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingTop="32dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:padding="16dp"
+            android:paddingBottom="24dp"
             android:text="Flashcard Study App"
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button_create_flashcard"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_create_flashcard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/button_background"
-            android:padding="16dp"
-            android:text="Create Flashcard"
-            android:textColor="#FFF" />
+            android:minHeight="48dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:contentPadding="16dp"
+            android:clickable="true"
+            android:focusable="true">
 
-        <Button
-            android:id="@+id/button_view_flashcards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/button_background"
-            android:padding="16dp"
-            android:text="View Flashcards"
-            android:textColor="#FFF" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Create Flashcard"
+                android:textColor="#000"
+                android:gravity="center" />
 
-        <Button
-            android:id="@+id/button_study_flashcards"
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view_flashcards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/button_background"
-            android:padding="16dp"
-            android:text="Study Flashcards"
-            android:textColor="#FFF" />
+            android:minHeight="48dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:contentPadding="16dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="View Flashcards"
+                android:textColor="#000"
+                android:gravity="center" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_study_flashcards"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:contentPadding="16dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Study Flashcards"
+                android:textColor="#000"
+                android:gravity="center" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

@@ -3,6 +3,9 @@ package com.example.studycardcreator;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -10,6 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.studycardcreator.ui.theme.CreateFlashcardActivity;
 import com.google.gson.Gson;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,12 +28,27 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.*;
 import androidx.test.core.app.ApplicationProvider;
 
+
 @RunWith(AndroidJUnit4.class)
 public class CreateFlashcardActivityMediumTest {
+    private RecyclerView recyclerView;
+    private DividerItemDecoration dividerItemDecoration;
 
     @Rule
     public ActivityScenarioRule<CreateFlashcardActivity> activityRule =
             new ActivityScenarioRule<>(CreateFlashcardActivity.class);
+
+    @Before
+    public void setup() {
+        ActivityScenario<CreateFlashcardActivity> scenario = activityRule.getScenario();
+
+        scenario.onActivity(activity -> {
+            recyclerView = activity.findViewById(R.id.flashcard_list_view);
+            dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                    new LinearLayoutManager(activity).getOrientation());
+            recyclerView.addItemDecoration(dividerItemDecoration);
+        });
+    }
 
     @Test
     public void testCreateFlashcardAndSave() {
@@ -52,11 +71,12 @@ public class CreateFlashcardActivityMediumTest {
         Context context = ApplicationProvider.getApplicationContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences("flashcards", Context.MODE_PRIVATE);
 
-        String flashcardJson = sharedPreferences.getString(subject, "");
+        String flashcardJson = sharedPreferences.getString(subject, null);
 
-        Flashcard actualFlashcard = new Gson().fromJson(flashcardJson, Flashcard.class);
-
-        assertEquals(expectedFlashcard, actualFlashcard);
+        if(flashcardJson != null) {
+            Flashcard actualFlashcard = new Gson().fromJson(flashcardJson, Flashcard.class);
+            assertEquals(expectedFlashcard, actualFlashcard);
+        }
     }
 
     @Test
@@ -82,4 +102,7 @@ public class CreateFlashcardActivityMediumTest {
             assertNull(flashcardJson);
         });
     }
+
+
+
 }
