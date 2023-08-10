@@ -11,12 +11,16 @@ public class Flashcard {
     private String answer;
     private boolean selected;
 
+    private long timestamp;
+
+
     public Flashcard(String subject, String question, String answer) {
         this.subject = subject;
         this.question = question;
         this.answer = answer;
         this.selected = false;
         this.id = UUID.randomUUID().toString();
+        this.timestamp = System.currentTimeMillis();
     }
 
     public String getId() {
@@ -54,6 +58,11 @@ public class Flashcard {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
 
 
     @Override

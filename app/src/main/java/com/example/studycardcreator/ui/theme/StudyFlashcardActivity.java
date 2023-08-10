@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.studycardcreator.R;
 import com.example.studycardcreator.Flashcard;
 import com.google.gson.Gson;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,9 +24,9 @@ public class StudyFlashcardActivity extends AppCompatActivity {
     private List<Flashcard> flashcards = new ArrayList<>();
     private Iterator<Flashcard> flashcardIterator;
     private Flashcard currentFlashcard;
-    private Button exitButton;
-    private Button showAnswerButton;
-    private Button nextButton;
+    private MaterialCardView exitButton;
+    private MaterialCardView showAnswerButton;
+    private MaterialCardView nextButton;
     private TextView questionTextView;
     private TextView answerTextView;
     private TextView subjectTextView;
@@ -64,9 +64,9 @@ public class StudyFlashcardActivity extends AppCompatActivity {
 
         flashcardIterator = flashcards.iterator();
 
-        exitButton = findViewById(R.id.button_exit);
-        showAnswerButton = findViewById(R.id.button_show_answer);
-        nextButton = findViewById(R.id.button_next);
+        exitButton = findViewById(R.id.card_exit);
+        showAnswerButton = findViewById(R.id.card_show_answer);
+        nextButton = findViewById(R.id.card_next_flashcard);
         questionTextView = findViewById(R.id.textView_question);
         answerTextView = findViewById(R.id.textView_answer);
 

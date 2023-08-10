@@ -30,67 +30,47 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_create_flashcard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:contentPadding="16dp"
-            android:clickable="true"
-            android:focusable="true">
+            style="@style/FlashcardCardStyle">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Create Flashcard"
-                android:textColor="#000"
-                android:gravity="center" />
-
+                android:text="Create a Flashcard"
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:padding="16dp"
+                android:background="?android:attr/selectableItemBackground"
+               />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_view_flashcards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:contentPadding="16dp"
-            android:clickable="true"
-            android:focusable="true">
+            style="@style/FlashcardCardStyle">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="View Flashcards"
-                android:textColor="#000"
-                android:gravity="center" />
-
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:padding="16dp"
+                android:background="?android:attr/selectableItemBackground"
+               />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_study_flashcards"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp"
-            app:contentPadding="16dp"
-            android:clickable="true"
-            android:focusable="true">
+            style="@style/FlashcardCardStyle">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Study Flashcards"
-                android:textColor="#000"
-                android:gravity="center" />
-
+                android:textColor="@color/text_secondary"
+                android:gravity="center"
+                android:padding="16dp"
+                android:background="?android:attr/selectableItemBackground"
+                 />
         </com.google.android.material.card.MaterialCardView>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

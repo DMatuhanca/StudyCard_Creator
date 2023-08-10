@@ -3,9 +3,11 @@ package com.example.studycardcreator.ui.theme;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,17 +22,17 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
+
 
 public class ViewFlashcardActivity extends AppCompatActivity {
     private final List<Flashcard> flashcards = new ArrayList<>();
     private RecyclerView recyclerView;
-
     private FlashcardAdapter adapter;
     private SharedPreferences sharedPreferences;
-    private Button deleteSelectedButton;
-    private Button deleteAllButton;
 
-    private Button exitButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,8 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_flashcards);
 
         recyclerView = findViewById(R.id.flashcard_list_view);
-        deleteSelectedButton = findViewById(R.id.delete_selected_button);
-        deleteAllButton = findViewById(R.id.delete_all_button);
+        TextView deleteSelectedButton = findViewById(R.id.delete_selected_button);
+        TextView deleteAllButton = findViewById(R.id.delete_all_button);
         sharedPreferences = getSharedPreferences("flashcards", MODE_PRIVATE);
 
         setupRecyclerView();
@@ -48,8 +50,10 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         deleteSelectedButton.setOnClickListener(v -> deleteSelectedFlashcards());
         deleteAllButton.setOnClickListener(v -> showDeleteAllConfirmationDialog());
 
-        exitButton = findViewById(R.id.exit_button);
+        TextView exitButton = findViewById(R.id.exit_button);
         exitButton.setOnClickListener(v -> finish());
+
+
     }
 
 
@@ -157,4 +161,38 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
         builder.show();
     }
+
+    private void sortFlashcardsBySubject() {
+        Collections.sort(flashcards, (fc1, fc2) -> fc1.getSubject().compareToIgnoreCase(fc2.getSubject()));
+        adapter.notifyDataSetChanged();
+        Toast.makeText(ViewFlashcardActivity.this, "Flashcards sorted by subject", Toast.LENGTH_SHORT).show();
+    }
+
+    private void sortFlashcardsByLatest() {
+        Collections.sort(flashcards, (fc1, fc2) -> Long.compare(fc2.getTimestamp(), fc1.getTimestamp()));
+        adapter.notifyDataSetChanged();
+        Toast.makeText(ViewFlashcardActivity.this, "Flashcards sorted by latest", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_flashcards, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == com.example.studycardcreator.R.id.action_sort_subject) {
+            sortFlashcardsBySubject();
+            return true;
+        }
+        if (item.getItemId() == com.example.studycardcreator.R.id.action_sort_latest) {
+            sortFlashcardsByLatest();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 }

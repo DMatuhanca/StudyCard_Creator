@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.example.studycardcreator.R;
 import android.content.Intent;
 import android.view.View;
+
 import com.google.android.material.card.MaterialCardView; // Import MaterialCardView
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView createCard = findViewById(R.id.card_create_flashcard);
         MaterialCardView viewCard = findViewById(R.id.card_view_flashcards);
         MaterialCardView studyCard = findViewById(R.id.card_study_flashcards);
+
 
         createCard.setOnClickListener(new View.OnClickListener() {
             @Override

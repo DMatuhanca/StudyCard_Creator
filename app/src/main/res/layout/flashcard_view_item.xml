@@ -26,23 +26,34 @@
             android:text="Subject"
             android:textStyle="bold"
             android:textSize="18sp"
-            />
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/text_view_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_subject"
             android:text="Question"
-            android:textSize="16sp" />
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
 
         <TextView
             android:id="@+id/text_view_answer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_view_question"
             android:text="Answer"
-            android:textSize="16sp" />
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true" />
 
         </LinearLayout>
 
@@ -53,12 +64,19 @@
         android:layout_alignParentEnd="true"
         android:text="Edit"/>
 
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/text_layout"
-        android:layout_alignParentEnd="true"/>
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_layout"
+            android:layout_alignParentEnd="true"
+            android:padding="8dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:buttonTint="@color/black"/>
+
+
+
 
     </RelativeLayout>
 

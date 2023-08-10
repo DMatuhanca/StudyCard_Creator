@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.studycardcreator">
 
@@ -21,15 +20,15 @@
         </activity>
         <activity
             android:name=".ui.theme.CreateFlashcardActivity"
-            android:theme="@style/Theme.AppCompat">
+            android:theme="@style/Theme.StudyCardCreator">
         </activity>
         <activity
             android:name=".ui.theme.ViewFlashcardActivity"
-            android:theme="@style/Theme.AppCompat">
-            </activity>
+            android:theme="@style/Theme.StudyCardCreator">
+        </activity>
         <activity
             android:name=".ui.theme.StudyFlashcardActivity"
-            android:theme="@style/Theme.AppCompat">
+            android:theme="@style/Theme.StudyCardCreator">
         </activity>
 
     </application>
