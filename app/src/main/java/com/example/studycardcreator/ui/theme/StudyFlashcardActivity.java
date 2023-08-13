@@ -1,7 +1,6 @@
 package com.example.studycardcreator.ui.theme;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studycardcreator.Flashcard;
+import com.example.studycardcreator.FlashcardUtils;
 import com.example.studycardcreator.R;
 import com.google.android.material.card.MaterialCardView;
 import com.google.gson.Gson;
@@ -21,9 +21,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class StudyFlashcardActivity extends AppCompatActivity {
-    private final List<Flashcard> flashcards = new ArrayList<>();
+    private List<Flashcard> flashcards = new ArrayList<>();
     private Iterator<Flashcard> flashcardIterator;
     private TextView questionTextView;
     private TextView answerTextView;
@@ -105,7 +106,7 @@ public class StudyFlashcardActivity extends AppCompatActivity {
     }
 
 
-    private void showSubjectSelectionDialog() {
+    public void showSubjectSelectionDialog() {
         boolean[] checkedItems = new boolean[subjectList.size()];
         for (int i = 0; i < subjectList.size(); i++) {
             checkedItems[i] = selectedSubjects.contains(subjectList.get(i));
@@ -122,35 +123,33 @@ public class StudyFlashcardActivity extends AppCompatActivity {
             }
         });
 
-        builder.setPositiveButton("OK", (dialog, which) -> filterFlashcardsBySelectedSubjects());
-
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            flashcards = FlashcardUtils.filterFlashcardsBySelectedSubjects(flashcards, (Set<String>) selectedSubjects);
+        });
         builder.setNegativeButton("Cancel", null);
 
         AlertDialog dialog = builder.create();
         dialog.show();
     }
 
-    private void filterFlashcardsBySelectedSubjects() {
+    public static List<Flashcard> filterFlashcardsBySelectedSubjects(List<Flashcard> flashcards, Set<String> selectedSubjects) {
+        List<Flashcard> filteredFlashcards = new ArrayList<>();
+
         if (selectedSubjects.isEmpty()) {
-            flashcardIterator = flashcards.iterator();
-            showNextFlashcard();
-            return;
+            return new ArrayList<>(flashcards);
         }
 
-        List<Flashcard> filteredFlashcards = new ArrayList<>();
         for (Flashcard flashcard : flashcards) {
             if (selectedSubjects.contains(flashcard.getSubject())) {
                 filteredFlashcards.add(flashcard);
             }
         }
 
-        flashcards.clear();
-        flashcards.addAll(filteredFlashcards);
-        flashcardIterator = flashcards.iterator();
-        showNextFlashcard();
+        return filteredFlashcards;
     }
 
 
 
-
 }
+
+

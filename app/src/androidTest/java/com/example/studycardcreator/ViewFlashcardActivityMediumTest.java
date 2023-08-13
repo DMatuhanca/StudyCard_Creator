@@ -1,22 +1,5 @@
 package com.example.studycardcreator;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.view.View;
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-
-import com.example.studycardcreator.ui.theme.ViewFlashcardActivity;
-import com.google.gson.Gson;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.hamcrest.Matcher;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -26,6 +9,28 @@ import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtP
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.view.View;
+
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.example.studycardcreator.ui.theme.ViewFlashcardActivity;
+import com.google.gson.Gson;
+
+import org.hamcrest.Matcher;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class ViewFlashcardActivityMediumTest {
@@ -91,6 +96,36 @@ public class ViewFlashcardActivityMediumTest {
             assertEquals(expectedFlashcard, actualFlashcard);
         }
     }
+
+    @Test
+    public void testSortFlashcardsBySubject() {
+        List<Flashcard> flashcards = new ArrayList<>();
+        flashcards.add(new Flashcard("Math", "Question1", "Answer1"));
+        flashcards.add(new Flashcard("Physics", "Question2", "Answer2"));
+        flashcards.add(new Flashcard("Biology", "Question3", "Answer3"));
+
+        FlashcardUtils.sortFlashcardsBySubject(flashcards);
+
+        for (int i = 1; i < flashcards.size(); i++) {
+            assertTrue(flashcards.get(i - 1).getSubject().compareToIgnoreCase(flashcards.get(i).getSubject()) <= 0);
+        }
+    }
+
+    @Test
+    public void testSortFlashcardsByLatest() {
+        List<Flashcard> flashcards = new ArrayList<>();
+        flashcards.add(new Flashcard("Math", "Question1", "Answer1"));
+        flashcards.add(new Flashcard("Physics", "Question2", "Answer2"));
+        flashcards.add(new Flashcard("Biology", "Question3", "Answer3"));
+
+        FlashcardUtils.sortFlashcardsByLatest(flashcards);
+
+        for (int i = 1; i < flashcards.size(); i++) {
+            assertTrue(flashcards.get(i - 1).getTimestamp() >= flashcards.get(i).getTimestamp());
+        }
+    }
+
+
 
 }
 

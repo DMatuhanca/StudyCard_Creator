@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studycardcreator.Flashcard;
 import com.example.studycardcreator.FlashcardAdapter;
+import com.example.studycardcreator.FlashcardUtils;
 import com.example.studycardcreator.R;
 import com.google.gson.Gson;
 
@@ -27,9 +28,10 @@ import java.util.Map;
 
 
 public class ViewFlashcardActivity extends AppCompatActivity {
-    private final List<Flashcard> flashcards = new ArrayList<>();
+    public static List<Flashcard> flashcard;
+    private static final List<Flashcard> flashcards = new ArrayList<>();
     private RecyclerView recyclerView;
-    private FlashcardAdapter adapter;
+    private static FlashcardAdapter adapter;
     private SharedPreferences sharedPreferences;
 
 
@@ -168,18 +170,20 @@ public class ViewFlashcardActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void sortFlashcardsBySubject() {
-        flashcards.sort((fc1, fc2) -> fc1.getSubject().compareToIgnoreCase(fc2.getSubject()));
+    public void sortFlashcardsBySubject() {
+        FlashcardUtils.sortFlashcardsBySubject(flashcards);
         adapter.notifyDataSetChanged();
         Toast.makeText(ViewFlashcardActivity.this, "Flashcards sorted by subject", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private void sortFlashcardsByLatest() {
-        flashcards.sort((fc1, fc2) -> Long.compare(fc2.getTimestamp(), fc1.getTimestamp()));
+    public void sortFlashcardsByLatest() {
+        FlashcardUtils.sortFlashcardsByLatest(flashcards);
         adapter.notifyDataSetChanged();
         Toast.makeText(ViewFlashcardActivity.this, "Flashcards sorted by latest", Toast.LENGTH_SHORT).show();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
