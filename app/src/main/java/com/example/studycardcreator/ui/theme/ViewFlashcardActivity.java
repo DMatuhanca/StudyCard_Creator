@@ -1,5 +1,6 @@
 package com.example.studycardcreator.ui.theme;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,10 +10,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studycardcreator.Flashcard;
 import com.example.studycardcreator.FlashcardAdapter;
@@ -22,7 +24,6 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Collections;
 
 
 public class ViewFlashcardActivity extends AppCompatActivity {
@@ -64,6 +65,7 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void retrieveFlashcards() {
         new Thread(() -> {
             Map<String, ?> allEntries = sharedPreferences.getAll();
@@ -77,6 +79,7 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         }).start();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void deleteSelectedFlashcards() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete Selected Flashcards")
@@ -102,6 +105,7 @@ public class ViewFlashcardActivity extends AppCompatActivity {
                 .show();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void showDeleteAllConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete All Flashcards")
@@ -121,6 +125,7 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
     }
+    @SuppressLint("NotifyDataSetChanged")
     public void editFlashcard(Flashcard flashcard) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_edit_flashcard, null);
@@ -162,14 +167,16 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         builder.show();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void sortFlashcardsBySubject() {
-        Collections.sort(flashcards, (fc1, fc2) -> fc1.getSubject().compareToIgnoreCase(fc2.getSubject()));
+        flashcards.sort((fc1, fc2) -> fc1.getSubject().compareToIgnoreCase(fc2.getSubject()));
         adapter.notifyDataSetChanged();
         Toast.makeText(ViewFlashcardActivity.this, "Flashcards sorted by subject", Toast.LENGTH_SHORT).show();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void sortFlashcardsByLatest() {
-        Collections.sort(flashcards, (fc1, fc2) -> Long.compare(fc2.getTimestamp(), fc1.getTimestamp()));
+        flashcards.sort((fc1, fc2) -> Long.compare(fc2.getTimestamp(), fc1.getTimestamp()));
         adapter.notifyDataSetChanged();
         Toast.makeText(ViewFlashcardActivity.this, "Flashcards sorted by latest", Toast.LENGTH_SHORT).show();
     }

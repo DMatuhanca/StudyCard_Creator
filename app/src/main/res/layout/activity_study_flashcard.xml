@@ -5,6 +5,23 @@
     android:padding="16dp"
     android:background="@drawable/background_gradient">
 
+    <Button
+        android:id="@+id/btn_show_only"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="Show Only"
+        android:textColor="@android:color/white"
+         android:background="@color/colorPrimary"
+         android:paddingLeft="12dp"
+          android:paddingRight="12dp"
+          android:paddingTop="8dp"
+          android:paddingBottom="8dp"
+          android:layout_marginEnd="16dp"
+         android:layout_marginTop="16dp"
+         android:elevation="4dp" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/flashcard_card"
         android:layout_width="match_parent"
@@ -115,6 +132,7 @@
                />
 
         </com.google.android.material.card.MaterialCardView>
+
 
     </LinearLayout>
 

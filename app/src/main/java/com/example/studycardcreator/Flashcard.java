@@ -62,6 +62,15 @@ public class Flashcard {
     public long getTimestamp() {
         return timestamp;
     }
+    private boolean isForStudy = false; 
+
+    public boolean isForStudy() {
+        return isForStudy;
+    }
+
+    public void setForStudy(boolean forStudy) {
+        isForStudy = forStudy;
+    }
 
 
 

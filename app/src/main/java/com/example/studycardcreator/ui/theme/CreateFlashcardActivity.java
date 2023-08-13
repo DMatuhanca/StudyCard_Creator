@@ -37,6 +37,7 @@ public class CreateFlashcardActivity extends AppCompatActivity {
         final EditText answerEditText = dialogView.findViewById(R.id.editTextAnswer);
 
         builder.setTitle("Create Flashcard")
+                .setCancelable(false)  // This line ensures the dialog remains open
                 .setPositiveButton("Create", (dialog, id) -> {
                     String subject = subjectEditText.getText().toString();
                     String question = questionEditText.getText().toString();
@@ -54,7 +55,6 @@ public class CreateFlashcardActivity extends AppCompatActivity {
                     Toast.makeText(CreateFlashcardActivity.this, message, Toast.LENGTH_LONG).show();
                     finish();
                 })
-
                 .setNegativeButton("Exit", (dialog, id) -> {
                     Intent intent = new Intent(CreateFlashcardActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -62,9 +62,8 @@ public class CreateFlashcardActivity extends AppCompatActivity {
                 });
 
         builder.create().show();
-
-
     }
+
 
     private void saveFlashcard(Flashcard flashcard) {
         if (flashcard.getSubject().isEmpty() || flashcard.getQuestion().isEmpty() || flashcard.getAnswer().isEmpty()) {

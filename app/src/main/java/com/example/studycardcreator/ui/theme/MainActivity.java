@@ -1,12 +1,12 @@
 package com.example.studycardcreator.ui.theme;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.example.studycardcreator.R;
 import android.content.Intent;
-import android.view.View;
+import android.os.Bundle;
 
-import com.google.android.material.card.MaterialCardView; // Import MaterialCardView
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.studycardcreator.R;
+import com.google.android.material.card.MaterialCardView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,28 +20,19 @@ public class MainActivity extends AppCompatActivity {
         MaterialCardView studyCard = findViewById(R.id.card_study_flashcards);
 
 
-        createCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateFlashcardActivity.class);
-                startActivity(intent);
-            }
+        createCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CreateFlashcardActivity.class);
+            startActivity(intent);
         });
 
-        viewCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ViewFlashcardActivity.class);
-                startActivity(intent);
-            }
+        viewCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ViewFlashcardActivity.class);
+            startActivity(intent);
         });
 
-        studyCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, StudyFlashcardActivity.class);
-                startActivity(intent);
-            }
+        studyCard.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, StudyFlashcardActivity.class);
+            startActivity(intent);
         });
     }
 }
