@@ -25,7 +25,8 @@ public class ShowOnlyTest {
         selectedSubjects.add("Math");
         selectedSubjects.add("Biology");
 
-        List<Flashcard> filteredFlashcards = FlashcardUtils.filterFlashcardsBySelectedSubjects(flashcards, selectedSubjects);
+        List<String> selectedSubjectsList = new ArrayList<>(selectedSubjects);
+        List<Flashcard> filteredFlashcards = FlashcardUtils.filterFlashcardsBySelectedSubjects(flashcards, selectedSubjectsList);
 
         assertEquals(2, filteredFlashcards.size());
         assertTrue(filteredFlashcards.contains(new Flashcard("Math", "Question1", "Answer1")));

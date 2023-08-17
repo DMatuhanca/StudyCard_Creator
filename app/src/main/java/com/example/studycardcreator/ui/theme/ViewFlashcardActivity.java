@@ -108,6 +108,7 @@ public class ViewFlashcardActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NotifyDataSetChanged")
+
     private void showDeleteAllConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete All Flashcards")
@@ -127,7 +128,9 @@ public class ViewFlashcardActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
     }
+
     @SuppressLint("NotifyDataSetChanged")
+
     public void editFlashcard(Flashcard flashcard) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View viewInflated = LayoutInflater.from(this).inflate(R.layout.dialog_edit_flashcard, null);
@@ -170,6 +173,7 @@ public class ViewFlashcardActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NotifyDataSetChanged")
+
     public void sortFlashcardsBySubject() {
         FlashcardUtils.sortFlashcardsBySubject(flashcards);
         adapter.notifyDataSetChanged();
@@ -177,12 +181,12 @@ public class ViewFlashcardActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NotifyDataSetChanged")
+
     public void sortFlashcardsByLatest() {
         FlashcardUtils.sortFlashcardsByLatest(flashcards);
         adapter.notifyDataSetChanged();
         Toast.makeText(ViewFlashcardActivity.this, "Flashcards sorted by latest", Toast.LENGTH_SHORT).show();
     }
-
 
 
     @Override

@@ -67,7 +67,6 @@ public class StudyFlashcardActivity extends AppCompatActivity {
             }
         }
 
-
         flashcardIterator = flashcards.iterator();
 
         MaterialCardView exitButton = findViewById(R.id.card_exit);
@@ -124,7 +123,9 @@ public class StudyFlashcardActivity extends AppCompatActivity {
         });
 
         builder.setPositiveButton("OK", (dialog, which) -> {
-            flashcards = FlashcardUtils.filterFlashcardsBySelectedSubjects(flashcards, (Set<String>) selectedSubjects);
+            flashcards = FlashcardUtils.filterFlashcardsBySelectedSubjects(flashcards, selectedSubjects);
+            flashcardIterator = flashcards.iterator();
+            showNextFlashcard();
         });
         builder.setNegativeButton("Cancel", null);
 

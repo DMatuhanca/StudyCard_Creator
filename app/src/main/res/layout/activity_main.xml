@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:paddingBottom="24dp"
-            android:text="Flashcard Study App"
+            android:text="StudyCard Creator"
             android:textSize="30sp"
             android:textStyle="bold" />
 

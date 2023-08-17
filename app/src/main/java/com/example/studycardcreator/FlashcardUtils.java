@@ -13,7 +13,7 @@ public class FlashcardUtils {
     public static void sortFlashcardsByLatest(List<Flashcard> flashcards) {
         flashcards.sort((fc1, fc2) -> Long.compare(fc2.getTimestamp(), fc1.getTimestamp()));
     }
-    public static List<Flashcard> filterFlashcardsBySelectedSubjects(List<Flashcard> flashcards, Set<String> selectedSubjects) {
+    public static List<Flashcard> filterFlashcardsBySelectedSubjects(List<Flashcard> flashcards, List<String> selectedSubjects) {
         List<Flashcard> filteredFlashcards = new ArrayList<>();
 
         if (selectedSubjects.isEmpty()) {

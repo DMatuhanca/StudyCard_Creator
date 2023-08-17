@@ -38,18 +38,6 @@ public class CreateFlashcardActivityMediumTest {
     public ActivityScenarioRule<CreateFlashcardActivity> activityRule =
             new ActivityScenarioRule<>(CreateFlashcardActivity.class);
 
-    @Before
-    public void setup() {
-        ActivityScenario<CreateFlashcardActivity> scenario = activityRule.getScenario();
-
-        scenario.onActivity(activity -> {
-            recyclerView = activity.findViewById(R.id.flashcard_list_view);
-            dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                    new LinearLayoutManager(activity).getOrientation());
-            recyclerView.addItemDecoration(dividerItemDecoration);
-        });
-    }
-
     @Test
     public void testCreateFlashcardAndSave() {
         String subject = "Math";

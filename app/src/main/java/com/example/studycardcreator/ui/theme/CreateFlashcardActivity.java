@@ -37,7 +37,7 @@ public class CreateFlashcardActivity extends AppCompatActivity {
         final EditText answerEditText = dialogView.findViewById(R.id.editTextAnswer);
 
         builder.setTitle("Create Flashcard")
-                .setCancelable(false)  // This line ensures the dialog remains open
+                .setCancelable(false)
                 .setPositiveButton("Create", (dialog, id) -> {
                     String subject = subjectEditText.getText().toString();
                     String question = questionEditText.getText().toString();
